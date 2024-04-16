@@ -46,5 +46,5 @@ class ParserInterface:
     def message_to_dictionary(self, json_bytes):
         self.report.ParseFromString(json_bytes)
         message_to_json = MessageToJson(self.report)
-        logger.info("decompressed json data  %s", message_to_json)
+        # logger.info("decompressed json data  %s", message_to_json)
         return MessageToDict(self.report)

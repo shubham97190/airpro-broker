@@ -18,6 +18,7 @@ class BaseMqttClient(paho.Client):
         self.broker_port = int(dto.b_port if dto.b_port else os.getenv("MQTT_SERVER_PORT"))
         self.client_id = dto.client_id
         self.topic = dto.topic
+        self.qos = dto.p_qos
         super(BaseMqttClient, self).__init__(paho.CallbackAPIVersion.VERSION2, self.client_id)
         logger.info("config Set [%s]", self.broker_ip)
 
@@ -33,7 +34,7 @@ class BaseMqttClient(paho.Client):
 
     def on_connect(self, client, obj, flags, reason_code, properties):
         if reason_code == 0:
-            client.subscribe(self.topic, qos=1)
+            client.subscribe(self.topic, self.qos)
             logger.info("Subscribed successfully %s reason Code %s", self.topic, reason_code)
         else:
             logger.info("Subscribe to topic %s failed Returned code = %s", self.topic, reason_code)

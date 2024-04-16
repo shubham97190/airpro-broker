@@ -13,8 +13,8 @@ class ConfigParser(ParserInterface):
 
     def deserialize(self, payload):
         logger.info("Config Parser initiated for payload %s", payload)
-        message_to_dict = super(ConfigParser, self).extract_data(payload)
-        logger.info("Config Parser done for dict %s", message_to_dict)
+        # message_to_dict = super(ConfigParser, self).extract_data(payload)
+        # logger.info("Config Parser done for dict %s", message_to_dict)
 
-def serialize(self):
+    def serialize(self):
         pass

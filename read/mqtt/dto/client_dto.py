@@ -8,15 +8,16 @@ class SubsDto:
     client_id: str
     key: str
     thread_count: int
+    p_qos: int
     user_name: str = None
     passwd: str = None
     b_port: str = None
     broker_ip: str = None
 
-@dataclass(frozen=True)
+
+@dataclass
 class StatisticsDto:
     serial_num: str
     device_id: str
     mac_addr: str
     data: Union[dict, list]
-    

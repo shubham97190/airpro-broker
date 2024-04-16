@@ -1,24 +1,16 @@
 import requests
 
 from db import exceptions
-from db.connected_clients import ConnectedClient
-from db.device import Device
-from db.neighbors import Neighbor
-from db.vif import VIF
 
 
 class Client:
-    BASE_URL = "http://127.0.0.1:8520/"
+    BASE_URL = "http://127.0.0.1:8000/"
 
     def __init__(self, client_id=None, client_secret=None, domain=None):
         self.client_id = client_id
         self.client_secret = client_secret
         self.access_token = None
         self.api_token = None
-        self.vif = VIF(self)
-        self.connected_client = ConnectedClient(self)
-        self.device = Device(self)
-        self.neighbor = Neighbor(self)
 
         if domain:
             if not domain.endswith("/"):

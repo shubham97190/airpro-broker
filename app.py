@@ -28,9 +28,9 @@ def setup_logging(default_path='logging.json', default_level=logging.INFO, env_k
 
 if __name__ == '__main__':
     setup_logging()
-    dto = SubsDto("airpro/cloud/to/dev/config", "test2", "CONFIG", 5)
+    dto = SubsDto("airpro/cloud/to/dev/config", "test2", "CONFIG", 5, 1)
     f2 = AppBrokerClient(dto)
-    dto1 = SubsDto("airpro/cloud/to/dev/stats", "test", "STATS", 5)
+    dto1 = SubsDto("airpro/cloud/to/dev/stats", "test", "STATS", 5, 1)
     f1 = AppBrokerClient(dto1)
     f1.join_thread()
     f2.join_thread()

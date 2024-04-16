@@ -30,7 +30,7 @@ class StatisticsParser(ParserInterface):
                     data_to_push = message_to_dict[key]
                     logger.info("is Data Available for key %s data %s", key, data_to_push)
                     if data_to_push:
-                        data = StatisticsDto(serial_num, device_id, mac_addr, data_to_push)
+                        data = StatisticsDto(serial_num, device_id, mac_addr, data_to_push).json
                         var = db_client_factory.get_db_client(key).create(self, data)
                         logger.info("Response %s ", var)
                 except Exception as error:

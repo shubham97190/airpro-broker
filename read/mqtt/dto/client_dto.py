@@ -1,6 +1,6 @@
 from typing import Union
-from dataclasses import dataclass
-
+from dataclasses import dataclass, asdict, field
+from json import dumps
 
 @dataclass(frozen=True)
 class SubsDto:
@@ -21,3 +21,17 @@ class StatisticsDto:
     device_id: str
     mac_addr: str
     data: Union[dict, list]
+    
+    @property
+    def __dict__(self):
+        """
+        get a python dictionary
+        """
+        return asdict(self)
+
+    @property
+    def json(self):
+        """
+        get the json formated string
+        """
+        return dumps(self.__dict__)

@@ -17,7 +17,7 @@ class BaseMqttClient(paho.Client):
         self.passw = dto.passwd if dto.passwd else os.getenv("MQTT_SERVER_PASSWORD")
         self.broker_port = int(dto.b_port if dto.b_port else os.getenv("MQTT_SERVER_PORT"))
         self.client_id = dto.client_id
-        self.topic = dto.topic
+        self.topic = dto.mqtt_rec_topic
         self.qos = dto.p_qos
         super(BaseMqttClient, self).__init__(paho.CallbackAPIVersion.VERSION2, self.client_id)
         logger.info("config Set [%s]", self.broker_ip)

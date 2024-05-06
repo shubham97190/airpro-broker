@@ -11,10 +11,9 @@ class AppBrokerClient(BaseSubscriber):
 
     def __init__(self, dto: SubsDto):
         self.dto = dto
-
         super(AppBrokerClient, self).__init__(dto, self.get_client())
         self.start_thread()
-        logger.info("Config broker initialized for topic %s", self.dto.topic)
+        logger.info("Config broker initialized for topic %s", self.dto.mqtt_rec_topic)
 
     def join_thread(self):
         super(AppBrokerClient, self).join()

@@ -1,5 +1,8 @@
+import gzip
+import json
 import logging
 import threading
+import zlib
 
 from paho.mqtt.client import Client
 
@@ -14,17 +17,18 @@ class BaseSubscriber(threading.Thread):
 
     def __init__(self, dto: SubsDto, client: Client):
         super(BaseSubscriber, self).__init__()
-        self.thread_name = f"{dto.key}_thread".lower()
+        self.thread_name = f"{dto.key}_{dto.kf_pub_topic}_thread".lower()
         self.executor = BaseThreadPool(dto.thread_count, f"{self.thread_name}").get_thread_pool()
         self.name = self.thread_name
         self.daemon = True
         self.mqtt_c = client
+        self.kf_topic = dto.kf_pub_topic
         self.mqtt_c.on_message = self.on_message
         self.mqtt_c.on_subscribe = self.on_subscribe
         self.creator = factory.get_serializer(dto.key)
 
     def run(self):
-        logger.info("new thread [%s] assigned to topic [%s]", self.name, self.dto.topic)
+        logger.info("new thread [%s] assigned to topic [%s]", self.name, self.dto.mqtt_rec_topic)
         self.subscribe()
 
     def subscribe(self):
@@ -33,7 +37,7 @@ class BaseSubscriber(threading.Thread):
     def on_message(self, client, obj, msg):
         logger.info("Message received on topic [%s] qos [%s] and payload [%s] ", msg.topic, str(msg.qos),
                     str(msg.payload))
-        s = self.executor.submit(self.creator.deserialize, msg.payload)
+        s = self.executor.submit(self.creator.deserialize, msg.payload, self.kf_topic)
         logger.info("Parser Submitted %s ", s.done())
 
     def on_subscribe(self, client, obj, mid, reason_code_list, properties):

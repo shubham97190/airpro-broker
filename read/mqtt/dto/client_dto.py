@@ -1,8 +1,9 @@
-from typing import Union
-from dataclasses import dataclass, asdict, field
+from dataclasses import dataclass, asdict
 from json import dumps
+from typing import Union
 
-@dataclass
+
+@dataclass(frozen=True)
 class SuperDataClass:
 
     @property
@@ -18,26 +19,25 @@ class SuperDataClass:
         get the json formated string
         """
         return dumps(self.__dict__)
+
+
 @dataclass(frozen=True)
 class SubsDto(SuperDataClass):
-    topic: str
+    mqtt_rec_topic: str
     client_id: str
     key: str
     thread_count: int
     p_qos: int
+    kf_pub_topic: str
     user_name: str = None
     passwd: str = None
     b_port: str = None
     broker_ip: str = None
 
-@dataclass
-class DeviceDto(SuperDataClass):
+
+@dataclass(frozen=True)
+class StatisticsDto(SuperDataClass):
     serial_num: str
     device_id: str
     mac_addr: str
-
-@dataclass
-class StatisticsDto(SuperDataClass):
-    device:str
     data: Union[dict, list]
-    
